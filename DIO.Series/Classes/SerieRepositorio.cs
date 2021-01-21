@@ -12,9 +12,15 @@ namespace DIO.Series
             listaSerie[id] =  entidade;
         }
 
-        public void Exclui(int id)
+        public bool Exclui(int id)
         {
-            listaSerie[id].Excluir();
+            
+             if(listaSerie[id] != null){
+                listaSerie[id].Excluir();
+                return true;
+            }else{
+                return false;
+            }
         }
 
         public void Insere(Serie entidade)
@@ -34,7 +40,11 @@ namespace DIO.Series
 
         public Serie RetornaPorId(int id)
         {
-            return listaSerie[id];
+            if(listaSerie[id] != null){
+                return listaSerie[id];
+            }else{
+                return null;
+            }
         }
     }
 }

@@ -23,10 +23,10 @@ namespace DIO.Series
                         AtualizarSerie();
                         break;
                     case "4":
-                        //ExcluirSerie();
+                        ExcluirSerie();
                         break;
                     case "5":
-                        //VisualizarSerie();
+                        VisualizarSerie();
                         break;
                     case "C":
                         Console.Clear();
@@ -39,6 +39,41 @@ namespace DIO.Series
             
             Console.WriteLine("Obrigado por utilizar nossos serviços");
             Console.WriteLine("----------");
+        }
+
+        private static void VisualizarSerie()
+        {
+            Console.WriteLine("Digite o id da serie: ");
+            int indiceSerie =  int.Parse(Console.ReadLine());
+
+            var serie = repositorio.RetornaPorId(indiceSerie);
+            if(serie != null){
+                Console.WriteLine(serie);
+            }else{
+                Console.WriteLine("Não existe uma serie para esse id");
+            }
+            
+        }
+
+        private static void ExcluirSerie()
+        {
+            Console.WriteLine("Digite o id da serie: ");
+            int indiceSerie =  int.Parse(Console.ReadLine());
+            var serie = repositorio.RetornaPorId(indiceSerie);
+            if (indiceSerie >= 0 && serie != null){
+                Console.WriteLine("Realmente deseja excluir a serie {0} ? digite S = sim ou N = não." , serie);
+                string resposta = Console.ReadLine().ToUpper();
+                if( resposta == "S")
+                {
+                    repositorio.Exclui(indiceSerie);
+                    Console.WriteLine("A serie {0} foi excluida. " , serie);
+                    return;
+                }else{
+                    return;
+                }
+            }else{
+                Console.WriteLine("Não existe uma serie para esse id");
+            }
         }
 
         private static void AtualizarSerie()
@@ -97,7 +132,8 @@ namespace DIO.Series
 
             foreach (var serie in lista)
             {
-                Console.WriteLine("#ID {0}: - {1}", serie.retornaId(), serie.retornaTitulo());
+                var excluido = serie.retornaExcluido();
+                Console.WriteLine("#ID {0}: - {1} - {2}", serie.retornaId(), serie.retornaTitulo(), (excluido ? "**Excluido**" : ""));
             }
         }
 
