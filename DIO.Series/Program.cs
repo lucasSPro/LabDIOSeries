@@ -20,7 +20,7 @@ namespace DIO.Series
                         InserirSerie();
                         break;
                     case "3":
-                        //AtualizarSerie();
+                        AtualizarSerie();
                         break;
                     case "4":
                         //ExcluirSerie();
@@ -41,10 +41,22 @@ namespace DIO.Series
             Console.WriteLine("----------");
         }
 
+        private static void AtualizarSerie()
+        {
+            Console.WriteLine("Digite o id da serie: ");
+            int indiceSerie = int.Parse(Console.ReadLine());
+
+            repositorio.Atualiza(indiceSerie, PegaDadosInsercao(indiceSerie));
+        }
+
         private static void InserirSerie()
         {
-            Console.WriteLine("Inserir nova serie");
+            Console.WriteLine("Inserir nova serie: ");
+            repositorio.Insere(PegaDadosInsercao(repositorio.ProximoId()));
+        }
 
+        private static Serie PegaDadosInsercao(int id)
+        {
             foreach(int i in Enum.GetValues(typeof(Genero)))
             {
                 Console.WriteLine("{0} - {1}", i, Enum.GetName(typeof(Genero),i));
@@ -56,20 +68,20 @@ namespace DIO.Series
             Console.Write("Digite o titulo da serie: ");
             string entradaTitulo =  Console.ReadLine();
 
-            Console.Write("Digite o Ano de inicio da serie");
+            Console.Write("Digite o Ano de inicio da serie: ");
             int entradaAno = int.Parse(Console.ReadLine());
 
             Console.Write("Digite a descricao da serie: ");
             string entradaDescricao =  Console.ReadLine();
 
             Serie novaSerie = new Serie(
-                id: repositorio.ProximoId(),
+                id: id,
                 genero: (Genero)entradaGenero,
                 titulo: entradaTitulo,
                 ano: entradaAno,
                 descricao: entradaDescricao
             );
-            repositorio.Insere(novaSerie);
+            return novaSerie;
         }
 
         private static void ListarSeries()
