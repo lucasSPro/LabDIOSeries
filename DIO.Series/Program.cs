@@ -17,7 +17,7 @@ namespace DIO.Series
                         ListarSeries();
                         break;
                     case "2":
-                        //InserirSerie();
+                        InserirSerie();
                         break;
                     case "3":
                         //AtualizarSerie();
@@ -39,6 +39,37 @@ namespace DIO.Series
             
             Console.WriteLine("Obrigado por utilizar nossos serviços");
             Console.WriteLine("----------");
+        }
+
+        private static void InserirSerie()
+        {
+            Console.WriteLine("Inserir nova serie");
+
+            foreach(int i in Enum.GetValues(typeof(Genero)))
+            {
+                Console.WriteLine("{0} - {1}", i, Enum.GetName(typeof(Genero),i));
+            }
+
+            Console.Write("Digite o genero entre as opcções acima: ");
+            int entradaGenero = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite o titulo da serie: ");
+            string entradaTitulo =  Console.ReadLine();
+
+            Console.Write("Digite o Ano de inicio da serie");
+            int entradaAno = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite a descricao da serie: ");
+            string entradaDescricao =  Console.ReadLine();
+
+            Serie novaSerie = new Serie(
+                id: repositorio.ProximoId(),
+                genero: (Genero)entradaGenero,
+                titulo: entradaTitulo,
+                ano: entradaAno,
+                descricao: entradaDescricao
+            );
+            repositorio.Insere(novaSerie);
         }
 
         private static void ListarSeries()
